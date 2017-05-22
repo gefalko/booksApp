@@ -3,13 +3,13 @@ var app = angular.module('BooksApp', []);
 
 app.factory('Books', function($http) {
 
-	return {
-		getList: getList
-	};
+    return {
+	getList: getList
+    };
 	
     function getList(){
-		return $http.get('books.php');
-	};
+	return $http.get('books.php');
+    };
 
 });
 
@@ -50,12 +50,14 @@ app.factory('Cart', function(){
 
 app.controller('BooksCtrl', function($scope, Books, Cart) {
 
-	var vm = this;
+    var vm = this;
 
     vm.books = [];
     vm.totalBooks = 0;
+    
     vm.selection = [];
     vm.toogleSelection = toogleSelection;
+    
     vm.addToCart = addToCart;
     vm.removeFromCart = removeFromCart;
     vm.cart = Cart;
