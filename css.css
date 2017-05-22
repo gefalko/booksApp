@@ -1,0 +1,52 @@
+body{
+    max-width: 1020px;
+    margin: auto;
+    padding: 15px;
+}
+
+#cart {
+    background-color: #ddd;
+}
+
+.red{
+    color: red;
+}
+
+#cart ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+#cart ul li img{
+    float: left;
+    width: 65px;
+}
+
+#cart li {
+    padding: 10px;
+    overflow: auto;
+    padding:0;
+}
+
+#cart li p{
+    margin: 0;
+}
+
+#cart .img{
+    min-height: 77px;
+    float: left;
+    margin-right: 10px;
+}
+
+
+.header th:hover{
+    cursor:pointer;
+}
+
+.sortorder:after {
+    content: '\25b2';
+}
+
+.sortorder.reverse:after {
+    content: '\25bc';
+}

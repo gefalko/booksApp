@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Books</title>
+	<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="css.css" rel="stylesheet" type="text/css" />
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+	<script src="app.js"></script>
+	<meta charset="utf-8">
+</head>
+<body ng-app="BooksApp">
+	
+    <h1>Knygu pasaulis</h1>
+    
+    <div ng-controller="BooksCtrl as vm" class="row">
+      
+        <div class="col-md-9">
+       
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="search">Paieška</label>
+                    <input type="text" class="form-control" ng-model="vm.search">
+                </div>
+            </form>
+           
+            <div>rasta knygų: {{filtred.length}}/{{vm.totalBooks}}</div>
+            
+            <table class="table table-striped">
+                <thead>
+                  <tr class="header">
+                    <th>Pridėti</th>
+                    <th ng-click="vm.sortBy('title')">
+                        <span>Pavadinimas</span>
+                        <span 
+                            class="sortorder" 
+                            ng-show="vm.orderProp === 'title'" 
+                            ng-class="{reverse: vm.reverse}"
+                        ></span>
+                    </th>
+                    <th ng-click="vm.sortBy('rating')">
+                        <span>Reitingas</span>
+                        <span 
+                            class="sortorder" 
+                            ng-show="vm.orderProp === 'rating'" 
+                            ng-class="{reverse: vm.reverse}"
+                        ></span>
+                    </th>
+                    <th ng-click="vm.sortBy('year')">
+                        <span>Metai</span> 
+                        <span 
+                            class="sortorder" 
+                            ng-show="vm.orderProp === 'year'" 
+                            ng-class="{reverse: vm.reverse}"
+                        ></span>
+                    </th>
+                    <th ng-click="vm.sortBy('price')">
+                        <span>Kaina</span> 
+                        <span 
+                            class="sortorder" 
+                            ng-show="vm.orderProp === 'price'" 
+                            ng-class="{reverse: vm.reverse}"
+                        ></span>
+                    </th>
+                    <th>Turime</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="book in vm.books | orderBy:vm.orderProp:vm.reverse | filter: {title:vm.search} as filtred">
+
+                    <td>
+                        <input 
+                            type="checkbox" 
+                            value="{{book}}"
+                            ng-click="vm.toogleSelection(book)"
+                            ng-checked="vm.selection.indexOf(book) > -1"
+                            ng-disabled="!book.availability" 
+                        >
+                    </td>
+                    <td>{{book.title}}</td>
+                    <td>{{book.rating}}</td>
+                    <td>{{book.year}}</td>
+                    <td>{{book.price}} {{book.currency}}</td>
+                    <td>
+                        <span ng-if="book.availability"  class="glyphicon glyphicon-ok"></span>
+                        <span ng-if="!book.availability" class="glyphicon glyphicon-remove"></span>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+
+            <button 
+                type="button"  
+                class="btn btn-primary" 
+                ng-click="vm.addToCart()"
+             >
+                Į krepšelį
+            </button>
+        
+        </div>
+        
+        <div id="cart" class="col-md-3"> 
+            <h2>Krepšelis</h2>
+            <ul>
+                <li ng-repeat="book in vm.cart.items track by $index" class="item">
+                    <div class="img">
+                        <img ng-src="{{book.img}}" />
+                    </div>
+                    <div>
+                        <p class="title">{{book.title}}</p>
+                        <p class="price red">{{book.price}} {{book.currency}}</p>
+                        <button 
+                            type="button"
+                            class="btn btn-link"
+                            style="padding:0"
+                            ng-click="vm.removeFromCart(book)"
+                        >
+                            Išmesti
+                        </button>
+                    </div>        
+                </li>
+            </ul>
+            <div id="totalPrice" ng-if="vm.cart.items.length > 0" style="padding-bottom:10px;">
+                <hr/>
+                <p>viso kaina: <span class="red"> {{vm.cart.totalPrice}} {{vm.cart.currency}}</span></p>
+            </div>
+        <div>
+
+	</div>
+</body>
+</html>
